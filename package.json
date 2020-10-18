@@ -1,5 +1,5 @@
 {
-  "name": "auto-translate",
+  "name": "@spiralup/auto-translate",
   "version": "1.0.0",
   "description": "Translate text to different languages using Google or Microsoft translate, for example during JHipster code generation.",
   "main": "module/index.js",
@@ -20,11 +20,7 @@
     "type": "git",
     "url": "git+https://github.com/SpiralUp/auto-translate.git"
   },
-  "author": {
-    "name": "Ivan Vrbovcan",
-    "email": "ivrbovcan@gmail.com",
-    "url": "https://github.com/SpiralUp"
-  },
+  "author": "Ivan Vrbovcan <ivrbovcan@gmail.com> (https://github.com/SpiralUp)",
   "bugs": {
     "url": "https://github.com/SpiralUp/auto-translate/issues"
   },
@@ -67,5 +63,9 @@
     "lint-fix": "npm run lint -- --fix",
     "test": "npm run lint && nyc mocha",
     "test:watch": "mocha --watch --reporter min"
+  },
+  "directories": {
+    "lib": "lib",
+    "test": "test"
   }
 }

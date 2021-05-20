@@ -96,10 +96,10 @@ describe('initTranslator', () => {
         const afterTime1 = getFileModifiedTime(AUTO_TRANSLATE_CONFIG_PATH);
         const afterTime2 = getFileModifiedTime(GLOBAL_DICTIONARY_PATH);
 
-        if (configExists) {
+        if (configExists && beforeTime1) {
             expect(afterTime1.getTime()).to.eq(beforeTime1.getTime());
         }
-        if (dictExists) {
+        if (dictExists && beforeTime2) {
             expect(afterTime2.getTime()).to.eq(beforeTime2.getTime());
         }
     });
@@ -231,6 +231,8 @@ describe('translation with cloud providers', () => {
                 expect(reason).to.eq('');
             }
         );
+
+        return translationPromise;
     });
     it('should translate with azure', () => {
         const TEST_FOLDER = path.join(__dirname, 'data/test06');
@@ -254,17 +256,18 @@ describe('translation with cloud providers', () => {
 
         translationPromise.then(
             translation => {
-                expect(translation).to.eq('prijevod');
+                expect(translation).to.eq('prevođenje');
 
                 const config = Translator.getConfig();
-                expect(config.globalDict.en_hr.translation).to.eq('prijevod');
-                expect(config.projectDict.en_hr.translation).to.eq('prijevod');
+                expect(config.globalDict.en_hr.translation).to.eq('prevođenje');
+                expect(config.projectDict.en_hr.translation).to.eq('prevođenje');
             },
             reason => {
                 // console.log(`Rejected -> ${reason}`);
                 expect(reason).to.eq('');
             }
         );
+        return translationPromise;
     });
 
     it('should translate from project dictionary if project is used', () => {
@@ -282,6 +285,8 @@ describe('translation with cloud providers', () => {
         translationPromise.then(translation => {
             expect(translation).to.eq('prevediProjektno');
         });
+
+        return translationPromise;
     });
 
     it('should translate from global dictionary if project is not used', () => {
@@ -298,6 +303,8 @@ describe('translation with cloud providers', () => {
         translationPromise.then(translation => {
             expect(translation).to.eq('prevediGlobalno');
         });
+
+        return translationPromise;
     });
 });
 
@@ -320,7 +327,8 @@ function deleteFile(filePath) {
     try {
         fs.unlinkSync(filePath);
     } catch (err) {
-        console.error(err);
+        const logger = console;
+        logger.error(err);
     }
 }
 

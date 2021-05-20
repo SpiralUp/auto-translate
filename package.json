@@ -62,7 +62,11 @@
     "lint": "eslint .",
     "lint-fix": "npm run lint -- --fix",
     "test": "npm run lint && nyc mocha",
-    "test:watch": "mocha --watch --reporter min"
+    "test:watch": "mocha --watch --reporter min",
+    "release": "git push && git push --tags && npm publish",
+    "release:major": "npm version major -a -m \"Update to %s\" && npm run release",
+    "release:minor": "npm version minor -a -m \"Update to %s\" && npm run release",
+    "release:patch": "npm version patch -a -m \"Update to %s\" && npm run release"
   },
   "directories": {
     "lib": "lib",

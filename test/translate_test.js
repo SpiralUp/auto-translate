@@ -6,12 +6,8 @@
 
 /* eslint-disable no-new, no-unused-expressions */
 
-const expect = require('chai').expect;
 const fs = require('fs');
 const path = require('path');
-// const Promise = require('promise');
-
-// const fail = expect.fail;
 const Translator = require('../lib/translator/translate');
 
 const AUTO_TRANSLATE_USER_HOME_FOLDER = '.auto-translate';
@@ -43,9 +39,9 @@ describe('initTranslator', () => {
             pathToProject: TEST_FOLDER
         });
 
-        expect(doesFileExist(AUTO_TRANSLATE_CONFIG_PATH)).to.eq(true);
-        expect(doesFileExist(GLOBAL_DICTIONARY_PATH)).to.eq(true);
-        expect(doesFileExist(PROJECT_DICTIONARY_PATH)).to.eq(true);
+        expect(doesFileExist(AUTO_TRANSLATE_CONFIG_PATH)).toBeTruthy();
+        expect(doesFileExist(GLOBAL_DICTIONARY_PATH)).toBeTruthy();
+        expect(doesFileExist(PROJECT_DICTIONARY_PATH)).toBeTruthy();
     });
 
     it('Should not mess existing config', () => {
@@ -53,8 +49,8 @@ describe('initTranslator', () => {
         const AUTO_TRANSLATE_CONFIG_PATH = path.join(TEST_FOLDER, AUTO_TRANSLATE_CONFIG_FILE);
         const GLOBAL_DICTIONARY_PATH = path.join(TEST_FOLDER, GLOBAL_DICTIONARY_FILE);
 
-        expect(doesFileExist(AUTO_TRANSLATE_CONFIG_PATH)).to.eq(true);
-        expect(doesFileExist(GLOBAL_DICTIONARY_PATH)).to.eq(true);
+        expect(doesFileExist(AUTO_TRANSLATE_CONFIG_PATH)).toBeTruthy();
+        expect(doesFileExist(GLOBAL_DICTIONARY_PATH)).toBeTruthy();
         const beforeTime1 = getFileModifiedTime(AUTO_TRANSLATE_CONFIG_PATH);
         const beforeTime2 = getFileModifiedTime(GLOBAL_DICTIONARY_PATH);
 
@@ -67,8 +63,8 @@ describe('initTranslator', () => {
         const afterTime1 = getFileModifiedTime(AUTO_TRANSLATE_CONFIG_PATH);
         const afterTime2 = getFileModifiedTime(GLOBAL_DICTIONARY_PATH);
 
-        expect(afterTime1.getTime()).to.eq(beforeTime1.getTime());
-        expect(afterTime2.getTime()).to.eq(beforeTime2.getTime());
+        expect(afterTime1.getTime()).toEqual(beforeTime1.getTime());
+        expect(afterTime2.getTime()).toEqual(beforeTime2.getTime());
     });
 
     it('Should use user home if folder not specified', () => {
@@ -90,17 +86,17 @@ describe('initTranslator', () => {
 
         Translator.initTranslator();
 
-        expect(doesFileExist(AUTO_TRANSLATE_CONFIG_PATH)).to.eq(true);
-        expect(doesFileExist(GLOBAL_DICTIONARY_PATH)).to.eq(true);
+        expect(doesFileExist(AUTO_TRANSLATE_CONFIG_PATH)).toBeTruthy();
+        expect(doesFileExist(GLOBAL_DICTIONARY_PATH)).toBeTruthy();
 
         const afterTime1 = getFileModifiedTime(AUTO_TRANSLATE_CONFIG_PATH);
         const afterTime2 = getFileModifiedTime(GLOBAL_DICTIONARY_PATH);
 
         if (configExists && beforeTime1) {
-            expect(afterTime1.getTime()).to.eq(beforeTime1.getTime());
+            expect(afterTime1.getTime()).toEqual(beforeTime1.getTime());
         }
         if (dictExists && beforeTime2) {
-            expect(afterTime2.getTime()).to.eq(beforeTime2.getTime());
+            expect(afterTime2.getTime()).toEqual(beforeTime2.getTime());
         }
     });
 
@@ -113,7 +109,7 @@ describe('initTranslator', () => {
             globalDictFileName: GLOBAL_DICTIONARY_FILE
         });
         const config = Translator.getConfig();
-        expect(config.useProjectDict).to.eq(false);
+        expect(config.useProjectDict).toEqual(false);
     });
 
     it('should use project dict with project folder', () => {
@@ -126,7 +122,7 @@ describe('initTranslator', () => {
             pathToProject: TEST_FOLDER
         });
         const config = Translator.getConfig();
-        expect(config.useProjectDict).to.eq(true);
+        expect(config.useProjectDict).toBeTruthy();
     });
 });
 
@@ -154,15 +150,15 @@ describe('add and read from dictionaries', () => {
             pathToProject: TEST_FOLDER
         });
 
-        expect(doesFileExist(AUTO_TRANSLATE_CONFIG_PATH)).to.eq(true);
-        expect(doesFileExist(GLOBAL_DICTIONARY_PATH)).to.eq(true);
-        expect(doesFileExist(PROJECT_DICTIONARY_PATH)).to.eq(true);
+        expect(doesFileExist(AUTO_TRANSLATE_CONFIG_PATH)).toBeTruthy();
+        expect(doesFileExist(GLOBAL_DICTIONARY_PATH)).toBeTruthy();
+        expect(doesFileExist(PROJECT_DICTIONARY_PATH)).toBeTruthy();
 
         Translator.addToDictionary('translateGlobal', 'prevediGlobalno', 'en', 'hr');
         const config = Translator.getConfig();
 
-        expect(config.globalDict.en_hr.translateGlobal).to.eq('prevediGlobalno');
-        expect(config.projectDict.en_hr.translateGlobal).to.eq('prevediGlobalno');
+        expect(config.globalDict.en_hr.translateGlobal).toEqual('prevediGlobalno');
+        expect(config.projectDict.en_hr.translateGlobal).toEqual('prevediGlobalno');
 
         Translator.saveDictionary();
     });
@@ -179,7 +175,7 @@ describe('add and read from dictionaries', () => {
 
         const translatedTerm = Translator.findInDictionary('translate', 'en', 'hr');
 
-        expect(translatedTerm).to.eq('prevediProjektno');
+        expect(translatedTerm).toEqual('prevediProjektno');
     });
 
     it('should read from global dictionary if project is not used', () => {
@@ -193,7 +189,7 @@ describe('add and read from dictionaries', () => {
 
         const translatedTerm = Translator.findInDictionary('translate', 'en', 'hr');
 
-        expect(translatedTerm).to.eq('prevediGlobalno');
+        expect(translatedTerm).toEqual('prevediGlobalno');
     });
 });
 
@@ -220,15 +216,15 @@ describe('translation with cloud providers', () => {
 
         translationPromise.then(
             translation => {
-                expect(translation).to.eq('prijevod');
+                expect(translation).toEqual('prijevod');
 
                 const config = Translator.getConfig();
-                expect(config.globalDict.en_hr.translation).to.eq('prijevod');
-                expect(config.projectDict.en_hr.translation).to.eq('prijevod');
+                expect(config.globalDict.en_hr.translation).toEqual('prijevod');
+                expect(config.projectDict.en_hr.translation).toEqual('prijevod');
             },
             reason => {
                 // console.log(`Rejected -> ${reason}`);
-                expect(reason).to.eq('');
+                expect(reason).toEqual('');
             }
         );
 
@@ -256,15 +252,15 @@ describe('translation with cloud providers', () => {
 
         translationPromise.then(
             translation => {
-                expect(translation).to.eq('prevođenje');
+                expect(translation).toEqual('prevođenje');
 
                 const config = Translator.getConfig();
-                expect(config.globalDict.en_hr.translation).to.eq('prevođenje');
-                expect(config.projectDict.en_hr.translation).to.eq('prevođenje');
+                expect(config.globalDict.en_hr.translation).toEqual('prevođenje');
+                expect(config.projectDict.en_hr.translation).toEqual('prevođenje');
             },
             reason => {
                 // console.log(`Rejected -> ${reason}`);
-                expect(reason).to.eq('');
+                expect(reason).toEqual('');
             }
         );
         return translationPromise;
@@ -283,7 +279,7 @@ describe('translation with cloud providers', () => {
         const translationPromise = Translator.translateText('translate', 'translation', 'en', 'hr');
 
         translationPromise.then(translation => {
-            expect(translation).to.eq('prevediProjektno');
+            expect(translation).toEqual('prevediProjektno');
         });
 
         return translationPromise;
@@ -301,7 +297,7 @@ describe('translation with cloud providers', () => {
         const translationPromise = Translator.translateText('translate', 'translation', 'en', 'hr');
 
         translationPromise.then(translation => {
-            expect(translation).to.eq('prevediGlobalno');
+            expect(translation).toEqual('prevediGlobalno');
         });
 
         return translationPromise;

@@ -54,7 +54,7 @@ Config file **.auto-translate-config.json** configured to use Azure API:
     {
         "automaticTranslation": true,
         "translatorProvider": "azure",
-        "azureTranslateKey":  "8d349587aaddfff77466488499388e77",
+        "azureTranslateKey":  "<azure-key>",
         "googleTranslateKey": "please-enter-the-key"             
     }
 

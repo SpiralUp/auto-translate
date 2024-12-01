@@ -154,7 +154,7 @@ describe('add and read from dictionaries', () => {
         expect(doesFileExist(GLOBAL_DICTIONARY_PATH)).toBeTruthy();
         expect(doesFileExist(PROJECT_DICTIONARY_PATH)).toBeTruthy();
 
-        Translator.addToDictionary('translateGlobal', 'prevediGlobalno', 'en', 'hr');
+        Translator.addToDictionary('translateGlobal', 'translateGlobal', 'prevediGlobalno', 'en', 'hr');
         const config = Translator.getConfig();
 
         expect(config.globalDict.en_hr.translateGlobal).toEqual('prevediGlobalno');
@@ -173,7 +173,7 @@ describe('add and read from dictionaries', () => {
             pathToProject: TEST_FOLDER
         });
 
-        const translatedTerm = Translator.findInDictionary('translate', 'en', 'hr');
+        const translatedTerm = Translator.findInDictionary('translate', 'translate', 'en', 'hr');
 
         expect(translatedTerm.translation).toEqual('prevediProjektno');
     });
@@ -187,7 +187,7 @@ describe('add and read from dictionaries', () => {
             globalDictFileName: GLOBAL_DICTIONARY_FILE
         });
 
-        const translatedTerm = Translator.findInDictionary('translate', 'en', 'hr');
+        const translatedTerm = Translator.findInDictionary('translate', 'translate', 'en', 'hr');
 
         expect(translatedTerm.translation).toEqual('prevediGlobalno');
     });

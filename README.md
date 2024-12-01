@@ -29,32 +29,32 @@ Config file **.auto-translate-config.json** with default values:
         "automaticTranslation": false,
         "translatorProvider": "google",
         "azureTranslateKey": "please-enter-the-key",
-        "googleTranslateKey": "please-enter-the-key"
+        "googleServiceAccountFile": "/path/to/service-account-key.json"
     }
 
 #### Config file options
 - **automaticTranslation** [true || false]: if automatic translation is true, then auto-translate will use cloud API for translation of text not found in dictionaries, otherwise the translation will use only local dictionaries for the translation.  Default value is **false**.
 - **translationProvider** [azure || google]: define which translation provider will be used.  Default value is **google**.
 - **azureTranslateKey**: API key from Azure
-- **googleTranslateKey**: API key from Google
+- **googleServiceAccountFile**: Path to Google service account key JSON file
 
 Config file **.auto-translate-config.json** configured to use Google API:
 
     {
         "automaticTranslation": true,
         "translatorProvider": "google",
-        "azureTranslateKey":  "please-enter-the-key",
-        "googleTranslateKey": "AIfghUJhhdijhguihd_0DGTkjhg87897jsdh77I"             
+        "azureTranslateKey": "please-enter-the-key",
+        "googleServiceAccountFile": "/home/user/.auto-translate/google-service-account.json"
     }
 
-*The Google key is just an example.*
+*The path to service account file is just an example.*
 
 Config file **.auto-translate-config.json** configured to use Azure API:
 
     {
         "automaticTranslation": true,
         "translatorProvider": "azure",
-        "azureTranslateKey":  "8d349587aaddfff77466488499388e77",
+        "azureTranslateKey":  "<azure-key>",
         "googleTranslateKey": "please-enter-the-key"             
     }
 

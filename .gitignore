@@ -4,3 +4,6 @@ coverage/
 .nyc_output/
 .project
 .vscode/
+.aider*
+.env
+test/data/test06/.auto-translate-config-google.json

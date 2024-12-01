@@ -1,4 +1,7 @@
 {
+    "en_en": {
+        "translateGlobal": "translateGlobal"
+    },
     "en_hr": {
         "translateGlobal": "prevediGlobalno"
     }
